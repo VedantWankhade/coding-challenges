@@ -20,28 +20,32 @@ import java.util.Arrays;
  */
 public class LCMAndGCD {
     public static void main(String[] args) {
-        Arrays.stream(lcmAndGcd(5, 10)).forEach(System.out::println);
-        Arrays.stream(lcmAndGcd(14, 8)).forEach(System.out::println);
+        Arrays.stream(lcmAndGcd(5L, 10L)).forEach(System.out::println);
+        Arrays.stream(lcmAndGcd(14L, 8L)).forEach(System.out::println);
     }
 
-    static int[] lcmAndGcd(int a, int b) {
+    static Long[] lcmAndGcd(Long a, Long b) {
         if (a < b) {
-            int temp = a;
+            Long temp = a;
             a = b;
             b = temp;
         }
-        // lcm
-        int lcm = -1;
-        if (a % b == 0)
-            lcm = a;
-        else {
-            for (int i = 2; i <= b; i++) {
-                System.out.println(a + " * " + i + " = " + a * i + " | " + a + " * " + i + " % " + b + " = " + a*i%b);
-                if (a * i % b == 0) { lcm = a * i; break;};
-            }
-        }
 
         // gcd
-        return new int[]{lcm};
+        Long gcd = getGCD(a, b);
+
+        // lcm
+        Long lcm = a * b / gcd;
+        return new Long[]{lcm, gcd};
+    }
+
+    static Long getGCD(Long a, Long b) {
+        if (a == 0)  return b;
+        else if (b == 0) return a;
+        else {
+            return getGCD(b, a % b);
+        }
     }
 }
+
+
